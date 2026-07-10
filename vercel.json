@@ -1,9 +1,4 @@
 {
-  "services": {
-    "frontend": {
-      "root": ".",
-      "framework": "nextjs"
-    }
-  }
+  "cleanUrls": true
 }
 
