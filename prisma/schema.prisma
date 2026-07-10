@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Report {
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  type            String   // Symptom, Tongue, Eye, Comprehensive
+  risk            String   // Low, Medium, High
+  score           Int
+  title           String
+  summary         String
+  findings        String[]
+  recommendations String[]
+  symptoms        String[]
+  imageUrl        String?
+}
+
+model UserProfile {
+  id              String   @id @default(cuid())
+  name            String
+  email           String   @unique
+  age             Int
+  gender          String
+  bloodGroup      String
+  height          String
+  weight          String
+  existingDiseases String[]
+  smoking         String
+  alcohol         String
+  exercise        String
+  sleepHours      Int
+  sysBP           Int
+  diaBP           Int
+  bloodSugar      Int?
+}
