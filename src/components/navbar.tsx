@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Heart, Menu, X, Sun, Moon, LayoutDashboard, FileText, Camera, ShieldAlert, User, Settings as SettingsIcon, Cpu } from "lucide-react";
+import { Menu, X, Sun, Moon, LayoutDashboard, FileText, Camera, ShieldAlert, User, Settings as SettingsIcon, Cpu } from "lucide-react";
+import { ArogyaLogo } from "@/components/ui/arogya-logo";
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -52,23 +53,13 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="flex items-center space-x-2 group">
-              <div className="bg-brand-primary/10 dark:bg-brand-primary/20 p-2 rounded-xl text-brand-primary group-hover:scale-105 transition-transform duration-300">
-                <Heart className="h-6 w-6 fill-brand-primary/20 animate-pulse-slow" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-lg font-bold bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent">
-                  Arogya AI
-                </span>
-                <span className="text-[9px] font-medium text-slate-500 tracking-wider -mt-1 uppercase">
-                  Preventive Care
-                </span>
-              </div>
+            <Link href="/" className="flex items-center group">
+              <ArogyaLogo width={36} height={36} withText={true} withTagline={true} />
             </Link>
           </div>
 
           {/* Desktop Nav Items */}
-          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
+          <div className="hidden lg:flex items-center space-x-1 lg:space-x-2">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
@@ -79,7 +70,7 @@ export const Navbar = () => {
                   className={`flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 ${
                     isActive
                       ? "bg-brand-primary text-white shadow-md shadow-brand-primary/20"
-                      : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-brand-primary"
+                      : "text-slate-600 dark:text-slate-350 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-brand-primary"
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -100,15 +91,22 @@ export const Navbar = () => {
             </button>
             
             <Link
-              href="/assessment"
-              className="bg-brand-primary hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-md shadow-brand-primary/10 hover:shadow-brand-primary/25 transition-all active:scale-95"
+              href="/login"
+              className="px-4 py-2 border border-brand-primary text-brand-primary dark:border-brand-secondary dark:text-brand-secondary rounded-xl text-xs font-semibold hover:bg-brand-primary/5 active:scale-95 transition-all"
             >
-              Assess Health
+              Login
+            </Link>
+
+            <Link
+              href="/assessment"
+              className="bg-gradient-to-r from-brand-primary to-brand-secondary hover:brightness-110 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-md shadow-brand-primary/10 transition-all active:scale-95"
+            >
+              Get Started
             </Link>
           </div>
 
           {/* Mobile Menu Buttons */}
-          <div className="flex md:hidden items-center space-x-2">
+          <div className="flex lg:hidden items-center space-x-2">
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-xl border border-slate-200/60 dark:border-slate-800 text-slate-600 dark:text-slate-300"
@@ -127,7 +125,7 @@ export const Navbar = () => {
 
       {/* Mobile Menu Drawer */}
       {isOpen && (
-        <div className="md:hidden glass-panel border-t border-slate-200/50 dark:border-slate-800/40 px-2 pt-2 pb-4 space-y-1 shadow-inner animate-fade-in">
+        <div className="lg:hidden glass-panel border-t border-slate-200/50 dark:border-slate-800/40 px-2 pt-2 pb-4 space-y-1 shadow-inner animate-fade-in">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
@@ -147,13 +145,20 @@ export const Navbar = () => {
               </Link>
             );
           })}
-          <div className="pt-2 px-4">
+          <div className="pt-2 px-4 space-y-2">
+            <Link
+              href="/login"
+              onClick={() => setIsOpen(false)}
+              className="block w-full text-center border border-brand-primary text-brand-primary py-2.5 rounded-xl text-sm font-semibold"
+            >
+              Login
+            </Link>
             <Link
               href="/assessment"
               onClick={() => setIsOpen(false)}
-              className="block w-full text-center bg-brand-primary hover:bg-blue-700 text-white py-3 rounded-xl text-sm font-bold shadow-md shadow-brand-primary/25"
+              className="block w-full text-center bg-gradient-to-r from-brand-primary to-brand-secondary text-white py-2.5 rounded-xl text-sm font-bold shadow-md shadow-brand-primary/25"
             >
-              Assess Health Now
+              Get Started
             </Link>
           </div>
         </div>

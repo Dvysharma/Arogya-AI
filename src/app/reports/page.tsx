@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { FileText, Search, Filter, Trash2, Download, X, Calendar, Activity, AlertTriangle, ShieldCheck, Heart, Sparkles, Camera, Printer, AlertCircle } from "lucide-react";
-import { MedicalDisclaimer } from "@/components/ui/medical-disclaimer";
 import { HealthReport, mockReports } from "@/lib/mock-data";
+import { ArogyaLogo } from "@/components/ui/arogya-logo";
 
 export default function ReportsHistory() {
   const [reports, setReports] = useState<HealthReport[]>([]);
@@ -70,11 +70,11 @@ export default function ReportsHistory() {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case "Tongue":
-        return <Sparkles className="h-4 w-4 text-emerald-600" />;
+        return <Sparkles className="h-4 w-4 text-brand-secondary" />;
       case "Eye":
         return <Camera className="h-4 w-4 text-rose-600" />;
       default:
-        return <Activity className="h-4 w-4 text-blue-600" />;
+        return <Activity className="h-4 w-4 text-brand-primary" />;
     }
   };
 
@@ -87,21 +87,20 @@ export default function ReportsHistory() {
   });
 
   return (
-    <div className="space-y-8 animate-fade-in text-left pb-12">
+    <div className="space-y-8 animate-fade-in text-left pb-12 circuit-bg">
       {/* Printable Report Layout - Hidden in normal screen, styled for Print */}
       {selectedReport && (
         <div className="hidden print:block p-8 bg-white text-black font-sans space-y-8" id="printable-report">
           {/* Header */}
           <div className="flex justify-between items-center border-b-2 border-slate-900 pb-4">
-            <div className="space-y-1">
-              <h1 className="text-xl font-black tracking-wide text-slate-900">AROGYA AI SCREENING REPORT</h1>
-              <p className="text-[9px] uppercase tracking-wider text-slate-500 font-bold">Preventive Healthcare Insights & Risk Assessment</p>
+            <div className="flex items-center space-x-3">
+              {/* Logo vector for print layout */}
+              <ArogyaLogo width={45} height={45} withText={true} withTagline={true} />
             </div>
             {/* Custom SVG QR Code */}
             <div className="h-14 w-14 border border-slate-300 p-1 flex items-center justify-center bg-white">
               <svg viewBox="0 0 100 100" className="h-full w-full">
                 <rect width="100" height="100" fill="none" />
-                {/* Outlines of QR */}
                 <rect x="0" y="0" width="30" height="30" fill="black" />
                 <rect x="5" y="5" width="20" height="20" fill="white" />
                 <rect x="10" y="10" width="10" height="10" fill="black" />
@@ -111,7 +110,6 @@ export default function ReportsHistory() {
                 <rect x="0" y="70" width="30" height="30" fill="black" />
                 <rect x="5" y="75" width="20" height="20" fill="white" />
                 <rect x="10" y="80" width="10" height="10" fill="black" />
-                {/* Random blocks */}
                 <rect x="40" y="10" width="10" height="15" fill="black" />
                 <rect x="55" y="5" width="10" height="10" fill="black" />
                 <rect x="45" y="45" width="20" height="20" fill="black" />
@@ -180,14 +178,14 @@ export default function ReportsHistory() {
 
       {/* Header - Screen view */}
       <div className="flex flex-col space-y-2 print:hidden">
-        <div className="inline-flex items-center space-x-2 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider">
+        <div className="inline-flex items-center space-x-2 text-brand-primary dark:text-brand-secondary text-xs font-bold uppercase tracking-wider">
           <FileText className="h-4 w-4" />
           <span>Patient Screening Database</span>
         </div>
         <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
           Reports History
         </h1>
-        <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl">
+        <p className="text-xs md:text-sm text-slate-505 dark:text-slate-400 leading-relaxed max-w-xl font-medium">
           Search, audit, and filter previous local model results, and download print-friendly PDF lab sheets.
         </p>
       </div>
@@ -203,7 +201,7 @@ export default function ReportsHistory() {
             placeholder="Search symptoms, findings, summaries..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-850 bg-white/40 dark:bg-slate-950/40 text-xs font-semibold outline-none focus:border-blue-600 transition-colors"
+            className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-850 bg-white/40 dark:bg-slate-950/40 text-xs font-semibold outline-none focus:border-brand-primary transition-colors"
           />
         </div>
 
@@ -212,7 +210,7 @@ export default function ReportsHistory() {
           <select
             value={riskFilter}
             onChange={(e) => setRiskFilter(e.target.value as any)}
-            className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-855 bg-white dark:bg-slate-955 text-xs font-bold outline-none focus:border-blue-600 transition-colors"
+            className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-855 bg-white dark:bg-slate-955 text-xs font-bold outline-none focus:border-brand-primary transition-colors"
           >
             <option value="All">All Risks</option>
             <option value="Low">Low Risk</option>
@@ -226,7 +224,7 @@ export default function ReportsHistory() {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value as any)}
-            className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-855 bg-white dark:bg-slate-955 text-xs font-bold outline-none focus:border-blue-600 transition-colors"
+            className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-855 bg-white dark:bg-slate-955 text-xs font-bold outline-none focus:border-brand-primary transition-colors"
           >
             <option value="All">All Types</option>
             <option value="Symptom">Symptom Assessment</option>
@@ -253,9 +251,9 @@ export default function ReportsHistory() {
               <div
                 key={report.id}
                 onClick={() => setSelectedReport(report)}
-                className={`glass-panel rounded-3xl p-5 border cursor-pointer hover:border-blue-600/40 transition-all text-left flex justify-between items-center group shadow-sm ${
+                className={`glass-panel rounded-3xl p-5 border cursor-pointer hover:border-brand-primary/40 transition-all text-left flex justify-between items-center group shadow-sm ${
                   selectedReport?.id === report.id
-                    ? "border-blue-600 shadow-md bg-white dark:bg-slate-900/60"
+                    ? "border-brand-primary shadow-md bg-white dark:bg-slate-900/60"
                     : "border-slate-200/50 dark:border-slate-800/40"
                 }`}
               >
@@ -273,7 +271,7 @@ export default function ReportsHistory() {
                     </span>
                   </div>
                   
-                  <h3 className="text-xs md:text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-600 transition-colors truncate">
+                  <h3 className="text-xs md:text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-brand-primary transition-colors truncate">
                     {report.title}
                   </h3>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1 font-medium">
@@ -309,7 +307,7 @@ export default function ReportsHistory() {
         <div className="lg:col-span-1">
           {selectedReport ? (
             <div className="glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 shadow-xl text-left space-y-6 relative overflow-hidden">
-              <div className="absolute top-0 right-0 h-32 w-32 bg-blue-500/5 rounded-full blur-2xl"></div>
+              <div className="absolute top-0 right-0 h-32 w-32 bg-brand-primary/5 rounded-full blur-2xl"></div>
               
               {/* Header Info */}
               <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800/40">
@@ -327,7 +325,7 @@ export default function ReportsHistory() {
 
               {/* Stats dial */}
               <div className="flex items-center space-x-3.5 bg-slate-50 dark:bg-slate-900/60 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-850">
-                <div className="flex-shrink-0 h-9 w-9 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-600">
+                <div className="flex-shrink-0 h-9 w-9 bg-brand-primary/10 rounded-xl flex items-center justify-center text-brand-primary">
                   {getTypeIcon(selectedReport.type)}
                 </div>
                 <div>
@@ -342,10 +340,10 @@ export default function ReportsHistory() {
               {/* Findings */}
               <div className="space-y-2">
                 <h4 className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Visual Insights</h4>
-                <ul className="space-y-2 text-xs text-slate-650 dark:text-slate-350">
+                <ul className="space-y-2 text-xs text-slate-655 dark:text-slate-350">
                   {selectedReport.findings.map((f, i) => (
-                    <li key={i} className="flex items-start space-x-2 font-medium">
-                      <span className="h-1.5 w-1.5 rounded-full bg-blue-600 mt-1.5 flex-shrink-0" />
+                    <li key={i} className="flex items-start space-x-2 font-semibold">
+                      <span className="h-1.5 w-1.5 rounded-full bg-brand-primary mt-1.5 flex-shrink-0" />
                       <span>{f}</span>
                     </li>
                   ))}
@@ -355,10 +353,10 @@ export default function ReportsHistory() {
               {/* Recommendations */}
               <div className="space-y-2">
                 <h4 className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Preventive Actions</h4>
-                <ul className="space-y-2 text-xs text-slate-650 dark:text-slate-350 font-medium">
+                <ul className="space-y-2 text-xs text-slate-655 dark:text-slate-355 font-semibold">
                   {selectedReport.recommendations.map((r, i) => (
                     <li key={i} className="flex items-start space-x-2">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 mt-1.5 flex-shrink-0" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-brand-secondary mt-1.5 flex-shrink-0" />
                       <span>{r}</span>
                     </li>
                   ))}
@@ -376,7 +374,7 @@ export default function ReportsHistory() {
               <div className="flex space-x-2 pt-2">
                 <button
                   onClick={triggerPrint}
-                  className="flex-1 inline-flex items-center justify-center space-x-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-[10px] shadow-md shadow-blue-500/10 active:scale-95 transition-all"
+                  className="btn-primary flex-1 inline-flex items-center justify-center space-x-1.5 text-[10px]"
                 >
                   <Printer className="h-3.5 w-3.5" />
                   <span>Download / Print PDF</span>
@@ -385,10 +383,10 @@ export default function ReportsHistory() {
 
             </div>
           ) : (
-            <div className="glass-panel rounded-3xl p-8 border border-slate-200/50 dark:border-slate-800/40 h-full flex flex-col justify-center items-center text-center space-y-3.5 text-slate-450 py-20 shadow-sm">
+            <div className="glass-panel rounded-3xl p-8 border border-slate-200/50 dark:border-slate-800/40 h-full flex flex-col justify-center items-center text-center space-y-3.5 text-slate-455 py-20 shadow-sm">
               <FileText className="h-10 w-10 text-slate-300 animate-pulse-slow" />
               <div>
-                <h4 className="text-xs font-bold text-slate-700 dark:text-slate-200">Details Standby Console</h4>
+                <h4 className="text-xs font-bold text-slate-705 dark:text-slate-250">Details Standby Console</h4>
                 <p className="text-[10px] text-slate-400 mt-1 max-w-[200px] mx-auto">Select a report from the historical logs list to view findings, observations, and download PDF sheets.</p>
               </div>
             </div>
@@ -398,12 +396,12 @@ export default function ReportsHistory() {
       </div>
 
       {/* Disclaimer bottom */}
-      <div className="p-6 rounded-3xl border border-rose-500/20 bg-rose-500/5 text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed print:hidden">
-        <h4 className="font-extrabold text-rose-600 dark:text-rose-400 uppercase tracking-widest text-[9px] mb-2 flex items-center space-x-1.5">
+      <div className="p-6 rounded-[2rem] border border-rose-500/20 bg-rose-500/5 text-slate-505 dark:text-slate-400 text-[11px] leading-relaxed print:hidden">
+        <h4 className="font-extrabold text-rose-600 dark:text-rose-455 uppercase tracking-widest text-[9px] mb-2 flex items-center space-x-1.5">
           <AlertCircle className="h-4 w-4" />
           <span>Important Medical Disclaimer</span>
         </h4>
-        <p>
+        <p className="font-semibold">
           This result is generated using Artificial Intelligence and should not be considered a medical diagnosis. It does not replace physical checks, medical imaging, or physician diagnostics. Always seek the advice of a qualified healthcare professional with any questions regarding medical conditions.
         </p>
       </div>

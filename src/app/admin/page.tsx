@@ -5,16 +5,17 @@ import {
   Users, FileText, Cpu, Camera, TrendingUp, ShieldCheck, 
   BarChart2, Activity, UserCheck, ShieldAlert, AlertCircle 
 } from "lucide-react";
+import { ArogyaLogo } from "@/components/ui/arogya-logo";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<"analytics" | "logs">("analytics");
 
   // Mock Admin Analytics Data
   const stats = [
-    { label: "Total Platform Users", value: "1,248", icon: Users, color: "text-blue-600 bg-blue-50 dark:bg-blue-950/20" },
-    { label: "AI Reports Generated", value: "3,842", icon: FileText, color: "text-emerald-600 bg-emerald-50 dark:bg-emerald-950/20" },
+    { label: "Total Platform Users", value: "1,248", icon: Users, color: "text-brand-primary bg-brand-primary/10 dark:bg-brand-primary/20" },
+    { label: "AI Reports Generated", value: "3,842", icon: FileText, color: "text-brand-secondary bg-brand-secondary/10 dark:bg-brand-secondary/20" },
     { label: "Model Execution Success", value: "99.8%", icon: ShieldCheck, color: "text-indigo-600 bg-indigo-50 dark:bg-indigo-950/20" },
-    { label: "Visions Scans Processed", value: "1,920", icon: Camera, color: "text-rose-600 bg-rose-50 dark:bg-rose-950/20" }
+    { label: "Vision Scans Processed", value: "1,920", icon: Camera, color: "text-rose-600 bg-rose-50 dark:bg-rose-950/20" }
   ];
 
   const uploadLogs = [
@@ -32,17 +33,17 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in text-left pb-12">
+    <div className="space-y-8 animate-fade-in text-left pb-12 circuit-bg">
       {/* Title */}
       <div className="flex flex-col space-y-2">
-        <div className="inline-flex items-center space-x-2 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider">
-          <Activity className="h-4 w-4" />
+        <div className="inline-flex items-center space-x-2 text-brand-primary dark:text-brand-secondary text-xs font-bold uppercase tracking-wider">
+          <ArogyaLogo width={22} height={22} />
           <span>System Administration Panel</span>
         </div>
         <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
           AI Administrative Dashboard
         </h1>
-        <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl">
+        <p className="text-xs md:text-sm text-slate-555 dark:text-slate-400 leading-relaxed max-w-xl font-medium">
           Audit database predictions logs, check local CNN model parameters, and review system performance metrics.
         </p>
       </div>
@@ -52,7 +53,7 @@ export default function AdminDashboard() {
         {stats.map((s, i) => {
           const Icon = s.icon;
           return (
-            <div key={i} className="glass-panel rounded-3xl p-5 border border-slate-200/50 dark:border-slate-800/40 shadow-xl flex items-center space-x-4">
+            <div key={i} className="glass-panel rounded-[2rem] p-5 border border-slate-200/50 dark:border-slate-800/40 shadow-xl flex items-center space-x-4">
               <div className={`h-11 w-11 rounded-2xl flex items-center justify-center ${s.color}`}>
                 <Icon className="h-5.5 w-5.5" />
               </div>
@@ -71,8 +72,8 @@ export default function AdminDashboard() {
           onClick={() => setActiveTab("analytics")}
           className={`pb-3 text-xs font-extrabold transition-all border-b-2 uppercase tracking-wider ${
             activeTab === "analytics"
-              ? "border-blue-600 text-blue-600 dark:text-blue-400"
-              : "border-transparent text-slate-450 hover:text-slate-700 dark:hover:text-slate-300"
+              ? "border-brand-primary text-brand-primary dark:text-brand-secondary"
+              : "border-transparent text-slate-450 hover:text-slate-700 dark:hover:text-slate-350"
           }`}
         >
           Model Analytics
@@ -81,8 +82,8 @@ export default function AdminDashboard() {
           onClick={() => setActiveTab("logs")}
           className={`pb-3 text-xs font-extrabold transition-all border-b-2 uppercase tracking-wider ${
             activeTab === "logs"
-              ? "border-blue-600 text-blue-600 dark:text-blue-400"
-              : "border-transparent text-slate-450 hover:text-slate-700 dark:hover:text-slate-300"
+              ? "border-brand-primary text-brand-primary dark:text-brand-secondary"
+              : "border-transparent text-slate-450 hover:text-slate-700 dark:hover:text-slate-350"
           }`}
         >
           Image Upload Logs
@@ -93,21 +94,19 @@ export default function AdminDashboard() {
       {activeTab === "analytics" && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-fade-in">
           {/* SVG prediction histogram (2 cols) */}
-          <div className="lg:col-span-2 glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 shadow-xl text-left space-y-6">
+          <div className="lg:col-span-2 glass-panel rounded-[2rem] p-6 border border-slate-200/50 dark:border-slate-800/40 shadow-xl text-left space-y-6">
             <div>
               <h3 className="text-sm font-bold text-slate-855 dark:text-slate-200">Daily Prediction Volatility</h3>
               <p className="text-[10px] text-slate-400 font-medium">Tracking API requests volume compared against model load latencies</p>
             </div>
 
-            {/* Custom SVG Bar Chart */}
+            {/* Custom SVG Bar Chart in brand colors */}
             <div className="h-44 w-full">
               <svg className="w-full h-full" viewBox="0 0 500 120" preserveAspectRatio="none">
-                {/* Horizontal grid lines */}
                 <line x1="0" y1="20" x2="500" y2="20" stroke="#f1f5f9" strokeWidth="0.5" className="dark:stroke-slate-900" />
                 <line x1="0" y1="60" x2="500" y2="60" stroke="#f1f5f9" strokeWidth="0.5" className="dark:stroke-slate-900" />
                 <line x1="0" y1="100" x2="500" y2="100" stroke="#cbd5e1" strokeWidth="0.8" className="dark:stroke-slate-800" />
 
-                {/* Bars */}
                 {[
                   { x: 30, h: 50, val: "120", day: "Mon" },
                   { x: 100, h: 75, val: "185", day: "Tue" },
@@ -118,22 +117,18 @@ export default function AdminDashboard() {
                   { x: 450, h: 40, val: "98", day: "Sun" }
                 ].map((bar, i) => (
                   <g key={i}>
-                    {/* Bar path */}
                     <rect
                       x={bar.x}
                       y={100 - bar.h}
                       width="20"
                       height={bar.h}
                       rx="4"
-                      fill="#2563eb"
-                      opacity="0.85"
-                      className="hover:opacity-100 transition-opacity"
+                      fill="#1F3F94"
+                      className="hover:fill-[#16C3C7] transition-colors duration-250 cursor-pointer"
                     />
-                    {/* Val text */}
                     <text x={bar.x + 10} y={92 - bar.h} textAnchor="middle" fill="#475569" fontSize="7" fontWeight="bold">
                       {bar.val}
                     </text>
-                    {/* Day label */}
                     <text x={bar.x + 10} y="112" textAnchor="middle" fill="#94a3b8" fontSize="8" fontWeight="bold">
                       {bar.day}
                     </text>
@@ -144,7 +139,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Model Metrics Table (1 col) */}
-          <div className="glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 shadow-xl text-left space-y-4">
+          <div className="glass-panel rounded-[2rem] p-6 border border-slate-200/50 dark:border-slate-800/40 shadow-xl text-left space-y-4">
             <div>
               <h3 className="text-sm font-bold text-slate-855 dark:text-slate-200">Neural Network Stats</h3>
               <p className="text-[10px] text-slate-400">Current testing criteria parameters for active local classifiers</p>
@@ -155,11 +150,11 @@ export default function AdminDashboard() {
                 <div key={idx} className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-850 space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200">{m.name}</span>
-                    <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600">
+                    <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-brand-secondary/10 text-brand-secondary">
                       {m.accuracy}
                     </span>
                   </div>
-                  <div className="flex justify-between text-[9px] text-slate-450 font-bold">
+                  <div className="flex justify-between text-[9px] text-slate-455 font-bold">
                     <span>Latency: {m.latency}</span>
                     <span>Total Runs: {m.runs}</span>
                   </div>
@@ -172,7 +167,7 @@ export default function AdminDashboard() {
 
       {/* Tab B: Image Upload Logs Table */}
       {activeTab === "logs" && (
-        <div className="glass-panel rounded-3xl border border-slate-200/50 dark:border-slate-800/40 shadow-xl overflow-hidden animate-fade-in text-left">
+        <div className="glass-panel rounded-[2rem] border border-slate-200/50 dark:border-slate-800/40 shadow-xl overflow-hidden animate-fade-in text-left">
           <div className="p-6 border-b border-slate-100 dark:border-slate-800/40">
             <h3 className="text-sm font-bold text-slate-855 dark:text-slate-200">Image Logs</h3>
             <p className="text-[10px] text-slate-405">Audits logs of base64 images upload and corresponding Neural pipeline latency</p>
@@ -196,9 +191,9 @@ export default function AdminDashboard() {
                     <td className="px-6 py-4 whitespace-nowrap text-slate-400">{log.time}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-slate-800 dark:text-slate-250 font-bold">{log.type}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-slate-500 font-mono text-[10px]">{log.model}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-slate-500 truncate max-w-xs">{log.file}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-slate-550 truncate max-w-xs">{log.file}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-emerald-500/10 text-emerald-600">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-[#E8FBFD] text-brand-primary dark:bg-slate-900 dark:text-brand-secondary">
                         {log.status}
                       </span>
                     </td>
@@ -212,11 +207,11 @@ export default function AdminDashboard() {
       )}
 
       {/* Safety info disclaimer panel */}
-      <div className="p-5 rounded-3xl border border-blue-500/10 bg-blue-500/5 text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed flex items-start space-x-3">
-        <AlertCircle className="h-4.5 w-4.5 text-blue-600 flex-shrink-0 mt-0.5" />
+      <div className="p-5 rounded-[2rem] border border-brand-primary/10 bg-brand-primary/5 text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed flex items-start space-x-3">
+        <AlertCircle className="h-4.5 w-4.5 text-brand-primary flex-shrink-0 mt-0.5" />
         <div className="space-y-1">
-          <h4 className="font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-widest text-[9px]">Administrative Privacy Audit Guidelines</h4>
-          <p>
+          <h4 className="font-extrabold text-brand-primary dark:text-brand-secondary uppercase tracking-widest text-[9px]">Administrative Privacy Audit Guidelines</h4>
+          <p className="font-semibold">
             This admin panel operates under local check conditions. No clinical images or raw patient files are stored without explicit cryptographic encryption keys. Ensure database log sizes conform to local GDPR/HIPAA standards.
           </p>
         </div>

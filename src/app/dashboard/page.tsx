@@ -7,6 +7,7 @@ import {
   RefreshCw, Calendar, Sparkles, TrendingUp, Info, UserCheck, CheckCircle
 } from "lucide-react";
 import { mockDashboardStats, mockReports, healthTips, HealthReport } from "@/lib/mock-data";
+import { ArogyaLogo } from "@/components/ui/arogya-logo";
 
 export default function Dashboard() {
   const [reports, setReports] = useState<HealthReport[]>([]);
@@ -91,24 +92,27 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in pb-12">
+    <div className="space-y-8 animate-fade-in pb-12 text-left">
       {/* 1. Header Greeting */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 text-left">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-            Health Dashboard
-          </h1>
-          <p className="text-xs md:text-sm text-slate-500">
-            Monitor screening history, vital trends, and personalized preventive metrics.
-          </p>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 border-b border-slate-150 dark:border-slate-800/40 pb-6">
+        <div className="flex items-center space-x-3">
+          <ArogyaLogo width={42} height={42} />
+          <div>
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+              Health Dashboard
+            </h1>
+            <p className="text-xs md:text-sm text-slate-500">
+              Monitor screening history, vital trends, and personalized preventive metrics.
+            </p>
+          </div>
         </div>
         
-        <div className="flex items-center space-x-3 text-xs font-semibold text-slate-400">
-          <Calendar className="h-4 w-4 text-blue-600" />
+        <div className="flex items-center space-x-3 text-xs font-semibold text-slate-450">
+          <Calendar className="h-4 w-4 text-brand-primary" />
           <span>July 11, 2026</span>
           <button
             onClick={() => window.location.reload()}
-            className="p-2 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-850 text-slate-500 hover:text-blue-600 transition-colors"
+            className="p-2 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-850 text-slate-500 hover:text-brand-primary transition-colors"
             title="Refresh dashboard stats"
           >
             <RefreshCw className="h-3.5 w-3.5" />
@@ -120,8 +124,8 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {/* Widget A: Health Score Circular Gauge */}
-        <div className="glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl">
-          <div className="absolute top-0 right-0 h-24 w-24 bg-blue-500/5 rounded-full blur-2xl"></div>
+        <div className="glass-panel rounded-[2rem] p-6 border border-slate-200/50 dark:border-slate-800/40 flex flex-col items-center justify-between text-center relative overflow-hidden shadow-xl">
+          <div className="absolute top-0 right-0 h-24 w-24 bg-brand-primary/5 rounded-full blur-2xl"></div>
           
           <div className="w-full text-left">
             <h3 className="text-sm font-bold text-slate-850 dark:text-slate-200">AI Health Index</h3>
@@ -161,7 +165,7 @@ export default function Dashboard() {
         </div>
 
         {/* Widget B: Recent Assessment Card */}
-        <div className="glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 flex flex-col justify-between text-left shadow-xl">
+        <div className="glass-panel rounded-[2rem] p-6 border border-slate-200/50 dark:border-slate-800/40 flex flex-col justify-between text-left shadow-xl">
           <div>
             <h3 className="text-sm font-bold text-slate-850 dark:text-slate-200">Latest Screening Report</h3>
             <p className="text-[10px] text-slate-400">Highlights of your most recent AI model check</p>
@@ -176,7 +180,7 @@ export default function Dashboard() {
           ) : reports.length > 0 ? (
             <div className="space-y-4 my-3">
               <div className="flex items-center space-x-3">
-                <div className="h-9 w-9 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-600">
+                <div className="h-9 w-9 bg-brand-primary/10 rounded-xl flex items-center justify-center text-brand-primary">
                   {getTypeIcon(reports[0].type)}
                 </div>
                 <div>
@@ -199,7 +203,7 @@ export default function Dashboard() {
           ) : (
             <div className="text-center py-6">
               <p className="text-xs text-slate-400 italic">No reports logged.</p>
-              <Link href="/assessment" className="text-xs font-bold text-blue-600 mt-2 inline-block hover:underline">
+              <Link href="/assessment" className="text-xs font-bold text-brand-primary mt-2 inline-block hover:underline">
                 Start first screening
               </Link>
             </div>
@@ -216,33 +220,33 @@ export default function Dashboard() {
         </div>
 
         {/* Widget C: Quick Launch Tools */}
-        <div className="glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 flex flex-col justify-between text-left shadow-xl">
+        <div className="glass-panel rounded-[2rem] p-6 border border-slate-200/50 dark:border-slate-800/40 flex flex-col justify-between text-left shadow-xl">
           <div>
-            <h3 className="text-sm font-bold text-slate-850 dark:text-slate-200">Start Screening</h3>
+            <h3 className="text-sm font-bold text-slate-855 dark:text-slate-200">Start Screening</h3>
             <p className="text-[10px] text-slate-400">Choose a diagnostic mapping layer</p>
           </div>
 
           <div className="grid grid-cols-2 gap-3.5 py-4">
             <Link
               href="/assessment"
-              className="flex flex-col items-center justify-center p-4 rounded-2xl bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10 hover:border-blue-500/30 transition-all text-center space-y-1.5 active:scale-95 shadow-sm"
+              className="flex flex-col items-center justify-center p-4 rounded-2xl bg-brand-primary/5 hover:bg-brand-primary/10 border border-brand-primary/10 hover:border-brand-primary/30 transition-all text-center space-y-1.5 active:scale-95 shadow-sm"
             >
-              <Activity className="h-5 w-5 text-blue-600" />
+              <Activity className="h-5 w-5 text-brand-primary" />
               <span className="text-[10px] font-extrabold text-slate-800 dark:text-slate-200">Symptom Form</span>
             </Link>
 
             <Link
               href="/image-analysis"
-              className="flex flex-col items-center justify-center p-4 rounded-2xl bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/10 hover:border-emerald-500/30 transition-all text-center space-y-1.5 active:scale-95 shadow-sm"
+              className="flex flex-col items-center justify-center p-4 rounded-2xl bg-brand-secondary/5 hover:bg-brand-secondary/10 border border-brand-secondary/10 hover:border-brand-secondary/30 transition-all text-center space-y-1.5 active:scale-95 shadow-sm"
             >
-              <Camera className="h-5 w-5 text-emerald-600" />
+              <Camera className="h-5 w-5 text-brand-secondary" />
               <span className="text-[10px] font-extrabold text-slate-800 dark:text-slate-200">Image Scan</span>
             </Link>
           </div>
 
           <Link
             href="/reports"
-            className="w-full flex items-center justify-between text-xs font-semibold text-blue-600 hover:text-blue-700 pt-2 group"
+            className="w-full flex items-center justify-between text-xs font-semibold text-brand-primary hover:text-brand-dark pt-2 group"
           >
             <span>Browse History ({activeReportsCount} reports)</span>
             <ChevronRight className="h-4 w-4 transform group-hover:translate-x-0.5 transition-transform" />
@@ -254,24 +258,24 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Widget D: Custom SVG Health Score Trend */}
-        <div className="lg:col-span-2 glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 text-left shadow-xl space-y-6">
+        <div className="lg:col-span-2 glass-panel rounded-[2rem] p-6 border border-slate-200/50 dark:border-slate-800/40 text-left shadow-xl space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-bold text-slate-850 dark:text-slate-200">Weekly Health Score Trend</h3>
+              <h3 className="text-sm font-bold text-slate-855 dark:text-slate-200">Weekly Health Score Trend</h3>
               <p className="text-[10px] text-slate-400">Evolution of screening accuracy scores over the last 6 months</p>
             </div>
-            <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-900 text-slate-500 uppercase tracking-wide">
+            <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-[#E8FBFD] dark:bg-slate-900 text-brand-primary dark:text-brand-secondary uppercase tracking-wide">
               6 Months
             </span>
           </div>
 
-          {/* Responsive SVG Line Chart */}
+          {/* Responsive SVG Line Chart styled in brand color gradients */}
           <div className="relative h-44 w-full">
             <svg className="w-full h-full" viewBox="0 0 500 120" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#2563eb" stopOpacity="0.2" />
-                  <stop offset="100%" stopColor="#2563eb" stopOpacity="0.0" />
+                  <stop offset="0%" stopColor="#1F3F94" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="#16C3C7" stopOpacity="0.0" />
                 </linearGradient>
               </defs>
               {/* Grid Lines */}
@@ -289,7 +293,7 @@ export default function Dashboard() {
               <path
                 d="M 10 90 L 100 80 L 200 65 L 300 70 L 400 45 L 490 35"
                 fill="none"
-                stroke="#2563eb"
+                stroke="#1F3F94"
                 strokeWidth="3.5"
                 strokeLinecap="round"
               />
@@ -304,7 +308,7 @@ export default function Dashboard() {
                 { x: 490, y: 35, label: "Jun" }
               ].map((pt, i) => (
                 <g key={i} className="group cursor-pointer">
-                  <circle cx={pt.x} cy={pt.y} r="4" fill="#ffffff" stroke="#2563eb" strokeWidth="2.5" />
+                  <circle cx={pt.x} cy={pt.y} r="4" fill="#ffffff" stroke="#16C3C7" strokeWidth="2.5" />
                   <text x={pt.x} y="115" textAnchor="middle" fill="#94a3b8" fontSize="8" fontWeight="bold">
                     {pt.label}
                   </text>
@@ -315,23 +319,23 @@ export default function Dashboard() {
         </div>
 
         {/* Widget E: Risk Categories Split Ratio */}
-        <div className="glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 text-left shadow-xl flex flex-col justify-between">
+        <div className="glass-panel rounded-[2rem] p-6 border border-slate-200/50 dark:border-slate-800/40 text-left shadow-xl flex flex-col justify-between">
           <div>
             <h3 className="text-sm font-bold text-slate-855 dark:text-slate-200">Risk Profile Split</h3>
             <p className="text-[10px] text-slate-400">Distribution of your assessment reports by risk level</p>
           </div>
 
           <div className="flex items-center space-x-6 my-4">
-            {/* Custom Pie Chart */}
+            {/* Custom Pie Chart using brand colors */}
             <div className="relative h-20 w-20 flex-shrink-0">
               <svg className="h-full w-full" viewBox="0 0 36 36">
                 <circle cx="18" cy="18" r="15.915" fill="none" stroke="#e2e8f0" strokeWidth="3" className="dark:stroke-slate-900" />
                 
-                {/* Low Risk green section */}
-                <circle cx="18" cy="18" r="15.915" fill="none" stroke="#10b981" strokeWidth="3.5"
+                {/* Low Risk green/teal section */}
+                <circle cx="18" cy="18" r="15.915" fill="none" stroke="#16C3C7" strokeWidth="3.5"
                   strokeDasharray="75 25" strokeDashoffset="25" />
-                {/* Medium Risk yellow section */}
-                <circle cx="18" cy="18" r="15.915" fill="none" stroke="#f59e0b" strokeWidth="3.5"
+                {/* Medium Risk yellow/orange section */}
+                <circle cx="18" cy="18" r="15.915" fill="none" stroke="#1F3F94" strokeWidth="3.5"
                   strokeDasharray="25 75" strokeDashoffset="50" />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
@@ -340,13 +344,13 @@ export default function Dashboard() {
             </div>
 
             {/* Labels */}
-            <div className="space-y-1.5 text-[10px] font-semibold text-slate-500">
+            <div className="space-y-1.5 text-[10px] font-bold text-slate-500">
               <div className="flex items-center space-x-2">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                <span className="h-2 w-2 rounded-full bg-brand-secondary" />
                 <span>Low Risk: {riskCounts.Low} ({reports.length > 0 ? Math.round((riskCounts.Low / reports.length) * 100) : 75}%)</span>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="h-2 w-2 rounded-full bg-amber-500" />
+                <span className="h-2 w-2 rounded-full bg-brand-primary" />
                 <span>Medium Risk: {riskCounts.Medium} ({reports.length > 0 ? Math.round((riskCounts.Medium / reports.length) * 100) : 25}%)</span>
               </div>
               <div className="flex items-center space-x-2">
@@ -357,8 +361,8 @@ export default function Dashboard() {
           </div>
 
           <div className="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-850 flex items-center space-x-2">
-            <Info className="h-4 w-4 text-emerald-600 flex-shrink-0" />
-            <span className="text-[10px] text-slate-500 dark:text-slate-450 leading-relaxed font-medium">
+            <Info className="h-4 w-4 text-brand-secondary flex-shrink-0" />
+            <span className="text-[10px] text-slate-550 dark:text-slate-450 leading-relaxed font-medium">
               Excellent! Your risk mapping profile remains heavily clustered in the healthy Low-Medium risk index.
             </span>
           </div>
@@ -370,21 +374,21 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {/* Sliding Health Tip */}
-        <div className="glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 flex flex-col justify-between text-left shadow-xl relative overflow-hidden md:col-span-2">
-          <div className="absolute top-0 right-0 h-32 w-32 bg-emerald-500/5 rounded-full blur-3xl"></div>
+        <div className="glass-panel rounded-[2rem] p-6 border border-slate-200/50 dark:border-slate-800/40 flex flex-col justify-between text-left shadow-xl relative overflow-hidden md:col-span-2">
+          <div className="absolute top-0 right-0 h-32 w-32 bg-brand-secondary/5 rounded-full blur-3xl"></div>
           
           <div className="flex items-center space-x-2">
-            <div className="bg-emerald-500/15 p-2 rounded-xl text-emerald-600">
+            <div className="bg-brand-secondary/15 p-2 rounded-xl text-brand-secondary">
               <Heart className="h-4 w-4" />
             </div>
             <div>
-              <h3 className="text-xs font-bold text-emerald-600 uppercase tracking-wider">Health Tip of the Day</h3>
+              <h3 className="text-xs font-bold text-brand-secondary uppercase tracking-wider">Health Tip of the Day</h3>
               <p className="text-[9px] text-slate-400">Preventive wellness guidance</p>
             </div>
           </div>
 
           <div className="my-6 min-h-[50px] flex items-center">
-            <p className="text-xs leading-relaxed font-bold text-slate-700 dark:text-slate-300">
+            <p className="text-xs leading-relaxed font-bold text-slate-700 dark:text-slate-350">
               {healthTips[tipIndex]}
             </p>
           </div>
@@ -397,7 +401,7 @@ export default function Dashboard() {
                   key={idx}
                   onClick={() => setTipIndex(idx)}
                   className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
-                    idx === tipIndex ? "bg-emerald-500 w-4" : "bg-slate-200 dark:bg-slate-800"
+                    idx === tipIndex ? "bg-brand-secondary w-4" : "bg-slate-200 dark:bg-slate-800"
                   }`}
                   aria-label={`Go to tip ${idx + 1}`}
                 />
@@ -407,24 +411,24 @@ export default function Dashboard() {
         </div>
 
         {/* Doctor Consultation Recommendation Widget */}
-        <div className="glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 flex flex-col justify-between text-left shadow-xl relative overflow-hidden">
+        <div className="glass-panel rounded-[2rem] p-6 border border-slate-200/50 dark:border-slate-800/40 flex flex-col justify-between text-left shadow-xl relative overflow-hidden">
           <div className="absolute top-0 right-0 h-24 w-24 bg-rose-500/5 rounded-full blur-2xl"></div>
           
           <div className="space-y-1">
-            <h3 className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider flex items-center space-x-1">
+            <h3 className="text-xs font-bold text-rose-600 dark:text-rose-455 uppercase tracking-wider flex items-center space-x-1">
               <ShieldAlert className="h-4 w-4" />
               <span>Medical Consult Advice</span>
             </h3>
             <p className="text-[9px] text-slate-450 uppercase font-bold">Standard Screening Alert</p>
           </div>
 
-          <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-350 font-medium my-4">
+          <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-350 font-semibold my-4">
             Arogya AI screening is a preliminary tool. Always schedule a clinical consultation with your physician to evaluate visual indicators and vital metrics.
           </p>
 
           <Link
             href="/reports"
-            className="w-full inline-flex items-center justify-center bg-slate-900 hover:bg-slate-850 dark:bg-slate-900 text-white font-bold py-2.5 rounded-xl text-[10px] transition-colors"
+            className="w-full inline-flex items-center justify-center bg-slate-900 hover:bg-slate-850 dark:bg-slate-950 text-white font-bold py-2.5 rounded-xl text-[10px] transition-colors"
           >
             Export Report to PDF
           </Link>
@@ -433,15 +437,15 @@ export default function Dashboard() {
       </div>
 
       {/* 5. Recent Reports List Table */}
-      <div className="glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 text-left shadow-xl">
+      <div className="glass-panel rounded-[2rem] p-6 border border-slate-200/50 dark:border-slate-800/40 text-left shadow-xl">
         <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800/40">
           <div>
-            <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200">Recent Health Screenings</h3>
+            <h3 className="text-sm font-bold text-slate-855 dark:text-slate-200">Recent Health Screenings</h3>
             <p className="text-[10px] text-slate-400">Log of recent AI analyses and lifestyle assessments</p>
           </div>
           <Link
             href="/reports"
-            className="text-xs font-semibold text-blue-600 hover:underline flex items-center space-x-1"
+            className="text-xs font-semibold text-brand-primary hover:underline flex items-center space-x-1"
           >
             <span>All History</span>
             <ChevronRight className="h-3.5 w-3.5" />
@@ -462,10 +466,10 @@ export default function Dashboard() {
                     {getTypeIcon(report.type)}
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-600 transition-colors">
+                    <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 group-hover:text-brand-primary transition-colors">
                       {report.title}
                     </h4>
-                    <p className="text-[10px] text-slate-455">
+                    <p className="text-[10px] text-slate-455 font-medium">
                       Type: {report.type} • {new Date(report.date).toLocaleDateString(undefined, {
                         month: "long",
                         day: "numeric",
@@ -489,7 +493,7 @@ export default function Dashboard() {
           </div>
         ) : (
           <div className="text-center py-10">
-            <p className="text-xs text-slate-400 italic">No reports logged. Begin an assessment to populate your dashboard.</p>
+            <p className="text-xs text-slate-400 italic font-medium">No reports logged. Begin an assessment to populate your dashboard.</p>
           </div>
         )}
       </div>
