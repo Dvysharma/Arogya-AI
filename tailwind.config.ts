@@ -13,12 +13,14 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         brand: {
-          primary: "#2563EB",
-          secondary: "#0EA5E9",
+          primary: "#1F3F94",      // Logo Blue
+          secondary: "#16C3C7",    // Logo Teal
+          dark: "#173B7A",         // Logo Dark Navy
+          light: "#E8FBFD",        // Logo Soft Cyan
+          "bg-light": "#F8FBFF",   // Brand Light Background
+          "bg-dark": "#070c18",    // Brand Dark Background
           success: "#10B981",
           danger: "#EF4444",
-          "bg-light": "#F8FAFC",
-          "bg-dark": "#0B0F19",
         }
       },
       animation: {
@@ -50,4 +52,3 @@ export default {
   },
   plugins: [],
 } satisfies Config;
-
