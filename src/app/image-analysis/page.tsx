@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Camera, Upload, RefreshCw, Sparkles, CheckCircle2, ChevronRight, Activity, ArrowRight } from "lucide-react";
+import { Camera, Upload, RefreshCw, Sparkles, CheckCircle2, ChevronRight, Activity, ArrowRight, Eye, ShieldAlert, AlertCircle } from "lucide-react";
 import { MedicalDisclaimer } from "@/components/ui/medical-disclaimer";
 import { HealthReport } from "@/lib/mock-data";
 import confetti from "canvas-confetti";
@@ -130,27 +130,31 @@ export default function ImageAnalysis() {
 
   const getRiskColor = (risk: string) => {
     switch (risk) {
-      case "High": return "text-brand-danger bg-red-50 dark:bg-red-950/20 border-brand-danger/30";
-      case "Medium": return "text-brand-secondary bg-sky-50 dark:bg-sky-950/20 border-brand-secondary/30";
-      default: return "text-brand-success bg-emerald-50 dark:bg-emerald-950/20 border-brand-success/30";
+      case "High": return "text-rose-600 bg-rose-50 dark:bg-rose-950/30 border-rose-200 dark:border-rose-900/30";
+      case "Medium": return "text-amber-600 bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900/30";
+      default: return "text-emerald-600 bg-emerald-50 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-900/30";
     }
   };
 
   const getScoreBg = (score: number) => {
-    if (score >= 85) return "stroke-brand-success";
-    if (score >= 70) return "stroke-brand-secondary";
-    return "stroke-brand-danger";
+    if (score >= 85) return "stroke-emerald-500";
+    if (score >= 70) return "stroke-amber-500";
+    return "stroke-rose-500";
   };
 
   return (
-    <div className="space-y-8 max-w-4xl mx-auto animate-fade-in text-left">
+    <div className="space-y-8 max-w-4xl mx-auto animate-fade-in text-left pb-12">
       {/* Title */}
-      <div>
-        <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-          AI Image Analysis
+      <div className="flex flex-col space-y-2">
+        <div className="inline-flex items-center space-x-2 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider">
+          <Eye className="h-4 w-4" />
+          <span>Multimodal Computer Vision Scan</span>
+        </div>
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          AI Image Analysis Console
         </h1>
-        <p className="text-xs md:text-sm text-slate-500">
-          Guided scan console utilizing image processing tools to analyze tongue and eye markers.
+        <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl">
+          Upload tongue or eye sclera photographs. Select from visual optimization tools to highlights structural indicators.
         </p>
       </div>
 
@@ -159,15 +163,16 @@ export default function ImageAnalysis() {
         
         {/* Left Column: Image Upload Console (3 cols) */}
         <div className="lg:col-span-3 space-y-6">
-          <div className="glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 shadow-md space-y-6">
-            
+          <div className="glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 shadow-xl space-y-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 h-32 w-32 bg-blue-500/5 rounded-full blur-2xl"></div>
+
             {/* Toggle */}
             <div className="flex bg-slate-100 dark:bg-slate-900 p-1.5 rounded-2xl">
               <button
                 onClick={() => { setScanType("Tongue"); setImage(null); setResult(null); }}
-                className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                   scanType === "Tongue"
-                    ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm"
+                    ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-md"
                     : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-350"
                 }`}
               >
@@ -175,9 +180,9 @@ export default function ImageAnalysis() {
               </button>
               <button
                 onClick={() => { setScanType("Eye"); setImage(null); setResult(null); }}
-                className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                   scanType === "Eye"
-                    ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm"
+                    ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-md"
                     : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-350"
                 }`}
               >
@@ -188,15 +193,15 @@ export default function ImageAnalysis() {
             {/* Upload Zone */}
             <div className="relative">
               {!image ? (
-                <div className="border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl p-12 text-center flex flex-col items-center justify-center space-y-4 hover:border-brand-primary transition-all">
-                  <div className="h-14 w-14 bg-slate-50 dark:bg-slate-900 rounded-2xl flex items-center justify-center text-slate-400">
-                    <Camera className="h-7 w-7" />
+                <div className="border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl p-12 text-center flex flex-col items-center justify-center space-y-4 hover:border-blue-600 transition-colors">
+                  <div className="h-16 w-16 bg-slate-50 dark:bg-slate-900 rounded-2xl flex items-center justify-center text-slate-400">
+                    <Camera className="h-8 w-8" />
                   </div>
                   <div>
                     <p className="text-xs font-bold text-slate-700 dark:text-slate-200">Drag & drop your scan image</p>
                     <p className="text-[10px] text-slate-400 mt-1">PNG, JPG up to 5MB</p>
                   </div>
-                  <label className="bg-brand-primary hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-xl text-[10px] cursor-pointer shadow-md shadow-brand-primary/10">
+                  <label className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-2xl text-[10px] cursor-pointer shadow-md shadow-blue-500/10 active:scale-95 transition-all">
                     Browse File
                     <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                   </label>
@@ -205,6 +210,13 @@ export default function ImageAnalysis() {
                 <div className="space-y-4">
                   {/* Image Display Panel */}
                   <div className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 flex items-center justify-center p-4 min-h-[250px]">
+                    {/* Visual guidelines target guide circle */}
+                    <div className="absolute inset-0 border-2 border-blue-500/10 rounded-3xl pointer-events-none flex items-center justify-center">
+                      <div className="border-2 border-dashed border-blue-500/25 rounded-full h-40 w-40 flex items-center justify-center">
+                        <span className="text-[8px] font-bold text-blue-500/30 uppercase tracking-widest">Alignment Guide</span>
+                      </div>
+                    </div>
+
                     <img
                       src={image}
                       alt="Ocular scan preview"
@@ -220,7 +232,7 @@ export default function ImageAnalysis() {
                     {enhancing && (
                       <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center text-white">
                         <div className="flex items-center space-x-2.5 bg-slate-950/80 px-4 py-2.5 rounded-xl border border-slate-800">
-                          <RefreshCw className="h-4 w-4 animate-spin text-brand-primary" />
+                          <RefreshCw className="h-4 w-4 animate-spin text-blue-600" />
                           <span className="text-[10px] font-bold tracking-wide uppercase">Applying Filter...</span>
                         </div>
                       </div>
@@ -228,14 +240,14 @@ export default function ImageAnalysis() {
                   </div>
 
                   {/* Contrast Enhancement controls */}
-                  <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800/40">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Image Processing Filters</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-850 gap-2.5">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Image Processing Filters</span>
                     <div className="flex space-x-2">
                       <button
                         onClick={() => triggerEnhancement("clahe")}
                         className={`px-3 py-1.5 rounded-lg text-[9px] font-bold transition-all border ${
                           filterActive === "clahe"
-                            ? "bg-brand-primary text-white border-brand-primary"
+                            ? "bg-blue-600 text-white border-blue-600"
                             : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-350"
                         }`}
                       >
@@ -245,7 +257,7 @@ export default function ImageAnalysis() {
                         onClick={() => triggerEnhancement("gaussian")}
                         className={`px-3 py-1.5 rounded-lg text-[9px] font-bold transition-all border ${
                           filterActive === "gaussian"
-                            ? "bg-brand-primary text-white border-brand-primary"
+                            ? "bg-blue-600 text-white border-blue-600"
                             : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-350"
                         }`}
                       >
@@ -265,7 +277,7 @@ export default function ImageAnalysis() {
                     <button
                       onClick={startAnalysis}
                       disabled={analyzing}
-                      className="inline-flex items-center space-x-2 bg-brand-success hover:bg-emerald-600 disabled:bg-slate-300 text-white font-bold px-6 py-3 rounded-xl text-xs shadow-lg shadow-brand-success/15"
+                      className="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-755 disabled:bg-slate-300 text-white font-bold px-6 py-3.5 rounded-2xl text-xs shadow-md shadow-emerald-500/10 active:scale-95 transition-all"
                     >
                       <Sparkles className="h-4 w-4" />
                       <span>Start AI Vision Scan</span>
@@ -284,7 +296,7 @@ export default function ImageAnalysis() {
                     <button
                       key={idx}
                       onClick={() => loadSample(sample.img, sample.desc)}
-                      className="flex items-center space-x-2.5 p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800/40 hover:border-brand-primary text-left transition-all hover:bg-slate-100/50"
+                      className="flex items-center space-x-2.5 p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800/40 hover:border-blue-600/30 text-left transition-all hover:bg-slate-100/50"
                     >
                       <div className="h-10 w-10 bg-white dark:bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center p-1">
                         <img src={sample.img} alt={sample.name} className="h-full w-full object-contain" />
@@ -305,31 +317,31 @@ export default function ImageAnalysis() {
         {/* Right Column: AI Analysis Output Results Console (2 cols) */}
         <div className="lg:col-span-2">
           {analyzing ? (
-            /* Running Steps Loader */
+            /* Running Steps Loader with skeleton */
             <div className="glass-panel rounded-3xl p-8 border border-slate-200/50 dark:border-slate-800/40 h-full flex flex-col justify-center items-center text-center space-y-6">
-              <div className="h-12 w-12 rounded-full border-4 border-brand-success/20 border-t-brand-success animate-spin"></div>
+              <div className="h-12 w-12 rounded-full border-4 border-emerald-500/20 border-t-emerald-600 animate-spin"></div>
               <div className="space-y-4 w-full max-w-[200px]">
                 <div className="flex items-center space-x-2.5 text-left text-xs font-semibold">
-                  <CheckCircle2 className={`h-4 w-4 ${analysisStep >= 1 ? "text-brand-success" : "text-slate-200 dark:text-slate-800"}`} />
-                  <span className={analysisStep >= 1 ? "text-slate-850 dark:text-slate-105" : "text-slate-400"}>Enhancing Image Contrast</span>
+                  <CheckCircle2 className={`h-4 w-4 ${analysisStep >= 1 ? "text-emerald-600" : "text-slate-200 dark:text-slate-800"}`} />
+                  <span className={analysisStep >= 1 ? "text-slate-850 dark:text-slate-105" : "text-slate-450"}>Enhancing Image Contrast</span>
                 </div>
                 <div className="flex items-center space-x-2.5 text-left text-xs font-semibold">
-                  <CheckCircle2 className={`h-4 w-4 ${analysisStep >= 2 ? "text-brand-success" : "text-slate-200 dark:text-slate-800"}`} />
-                  <span className={analysisStep >= 2 ? "text-slate-850 dark:text-slate-105" : "text-slate-400"}>Running Neural Nets</span>
+                  <CheckCircle2 className={`h-4 w-4 ${analysisStep >= 2 ? "text-emerald-600" : "text-slate-200 dark:text-slate-800"}`} />
+                  <span className={analysisStep >= 2 ? "text-slate-850 dark:text-slate-105" : "text-slate-450"}>Running Neural Nets</span>
                 </div>
                 <div className="flex items-center space-x-2.5 text-left text-xs font-semibold">
-                  <CheckCircle2 className={`h-4 w-4 ${analysisStep >= 3 ? "text-brand-success" : "text-slate-200 dark:text-slate-800"}`} />
-                  <span className={analysisStep >= 3 ? "text-slate-850 dark:text-slate-105" : "text-slate-400"}>Running AI Vision API</span>
+                  <CheckCircle2 className={`h-4 w-4 ${analysisStep >= 3 ? "text-emerald-600" : "text-slate-200 dark:text-slate-800"}`} />
+                  <span className={analysisStep >= 3 ? "text-slate-850 dark:text-slate-105" : "text-slate-450"}>Running AI Vision API</span>
                 </div>
               </div>
             </div>
           ) : result ? (
             /* Result Panel */
-            <div className="glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 shadow-lg text-left space-y-6 animate-slide-up">
+            <div className="glass-panel rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/40 shadow-xl text-left space-y-6 animate-slide-up">
               
               <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-850">
                 <div>
-                  <h3 className="text-xs font-bold text-slate-800 dark:text-slate-200">{result.title}</h3>
+                  <h3 className="text-xs font-extrabold text-slate-800 dark:text-slate-200">{result.title}</h3>
                   <p className="text-[9px] text-slate-400">Analysis completed successfully</p>
                 </div>
                 
@@ -342,7 +354,7 @@ export default function ImageAnalysis() {
               <div className="flex items-center space-x-4">
                 <div className="relative flex items-center justify-center flex-shrink-0">
                   <svg className="w-16 h-16 transform -rotate-90">
-                    <circle cx="32" cy="32" r="26" className="stroke-slate-200 dark:stroke-slate-800 fill-none" strokeWidth="4" />
+                    <circle cx="32" cy="32" r="26" className="stroke-slate-100 dark:stroke-slate-900 fill-none" strokeWidth="4" />
                     <circle
                       cx="32"
                       cy="32"
@@ -365,10 +377,10 @@ export default function ImageAnalysis() {
               {/* Findings */}
               <div className="space-y-2">
                 <h4 className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Visual Insights</h4>
-                <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-350">
+                <ul className="space-y-1.5 text-xs text-slate-650 dark:text-slate-350">
                   {result.findings.map((f, i) => (
-                    <li key={i} className="flex items-start space-x-1.5">
-                      <span className="h-1.5 w-1.5 rounded-full bg-brand-primary mt-1.5 flex-shrink-0" />
+                    <li key={i} className="flex items-start space-x-1.5 font-medium">
+                      <span className="h-1.5 w-1.5 rounded-full bg-blue-600 mt-1.5 flex-shrink-0" />
                       <span>{f}</span>
                     </li>
                   ))}
@@ -380,18 +392,18 @@ export default function ImageAnalysis() {
                 <h4 className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Preventive Actions</h4>
                 <ul className="space-y-1.5 text-xs text-slate-655 dark:text-slate-350">
                   {result.recommendations.map((r, i) => (
-                    <li key={i} className="flex items-start space-x-1.5">
-                      <span className="h-1.5 w-1.5 rounded-full bg-brand-success mt-1.5 flex-shrink-0" />
+                    <li key={i} className="flex items-start space-x-1.5 font-medium">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 mt-1.5 flex-shrink-0" />
                       <span>{r}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="pt-2 border-t border-slate-100 dark:border-slate-800/40">
+              <div className="pt-2 border-t border-slate-105 dark:border-slate-800/40">
                 <button
                   onClick={() => { setResult(null); setImage(null); setFilterActive("none"); }}
-                  className="w-full text-center bg-slate-50 hover:bg-slate-100 dark:bg-slate-900/60 dark:hover:bg-slate-900 py-2.5 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300"
+                  className="w-full text-center bg-slate-50 hover:bg-slate-100 dark:bg-slate-900/60 dark:hover:bg-slate-900 py-3 rounded-2xl text-xs font-bold text-slate-650 dark:text-slate-300 transition-colors"
                 >
                   Scan Another Image
                 </button>
@@ -412,8 +424,16 @@ export default function ImageAnalysis() {
 
       </div>
 
-      {/* Disclaimer bottom */}
-      <MedicalDisclaimer />
+      {/* Persistent disclaimer below results */}
+      <div className="p-6 rounded-3xl border border-rose-500/20 bg-rose-500/5 text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed">
+        <h4 className="font-extrabold text-rose-600 dark:text-rose-400 uppercase tracking-widest text-[9px] mb-2 flex items-center space-x-1.5">
+          <AlertCircle className="h-4 w-4" />
+          <span>Important Medical Disclaimer</span>
+        </h4>
+        <p>
+          This result is generated using Artificial Intelligence and should not be considered a medical diagnosis. It does not replace physical checks, medical imaging, or physician diagnostics. Always seek the advice of a qualified healthcare professional with any questions regarding medical conditions.
+        </p>
+      </div>
     </div>
   );
 }

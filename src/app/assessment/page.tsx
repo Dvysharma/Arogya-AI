@@ -2,7 +2,10 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, ChevronRight, Activity, ShieldCheck, Heart, RefreshCw } from "lucide-react";
+import { 
+  AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, ChevronRight, 
+  Activity, ShieldCheck, Heart, RefreshCw, Sparkles, User, Info, Calendar
+} from "lucide-react";
 import { MedicalDisclaimer } from "@/components/ui/medical-disclaimer";
 import { HealthReport } from "@/lib/mock-data";
 import confetti from "canvas-confetti";
@@ -124,49 +127,56 @@ export default function Assessment() {
   const getRiskColor = (risk: string) => {
     switch (risk) {
       case "High":
-        return "text-brand-danger bg-red-50 dark:bg-red-950/20 border-brand-danger/30";
+        return "text-rose-600 bg-rose-50 dark:bg-rose-950/30 border-rose-200 dark:border-rose-900/30";
       case "Medium":
-        return "text-brand-secondary bg-sky-50 dark:bg-sky-950/20 border-brand-secondary/30";
+        return "text-amber-600 bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900/30";
       default:
-        return "text-brand-success bg-emerald-50 dark:bg-emerald-950/20 border-brand-success/30";
+        return "text-emerald-600 bg-emerald-50 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-900/30";
     }
   };
 
   const getScoreBg = (score: number) => {
-    if (score >= 85) return "stroke-brand-success";
-    if (score >= 70) return "stroke-brand-secondary";
-    return "stroke-brand-danger";
+    if (score >= 85) return "stroke-emerald-500";
+    if (score >= 70) return "stroke-amber-500";
+    return "stroke-rose-500";
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8 animate-fade-in text-left">
-      {/* Page Title */}
-      <div>
-        <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-          AI Health Assessment
+    <div className="max-w-3xl mx-auto space-y-8 animate-fade-in text-left pb-12">
+      {/* Header Panel */}
+      <div className="flex flex-col space-y-2">
+        <div className="inline-flex items-center space-x-2 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider">
+          <Heart className="h-4 w-4 fill-blue-500/10" />
+          <span>Interactive Health Screening</span>
+        </div>
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          Symptom & Lifestyle Screener
         </h1>
-        <p className="text-xs md:text-sm text-slate-500">
-          Guided multi-step questionnaire mapping symptoms, physiological metrics, and lifestyle.
+        <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl">
+          Enter your vital parameters, select lifestyle behaviors, and map symptoms to run local Decision Tree predictive models.
         </p>
       </div>
 
-      {/* Main Container */}
+      {/* Main Form container */}
       {!result ? (
-        <div className="glass-panel rounded-3xl p-6 md:p-8 border border-slate-200/50 dark:border-slate-800/40 shadow-md">
-          {/* Step Indicators */}
+        <div className="glass-panel rounded-3xl p-6 md:p-8 border border-slate-200/50 dark:border-slate-800/40 shadow-xl relative overflow-hidden">
+          {/* Top subtle glow */}
+          <div className="absolute top-0 right-0 h-40 w-40 bg-blue-500/5 rounded-full blur-3xl"></div>
+
+          {/* Stepper Header */}
           <div className="flex items-center justify-between pb-6 mb-6 border-b border-slate-200/50 dark:border-slate-800/40">
             {[1, 2, 3].map((s) => (
               <div key={s} className="flex items-center space-x-2">
                 <div
-                  className={`h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
+                  className={`h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                     step === s
-                      ? "bg-brand-primary text-white"
+                      ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
                       : step > s
-                      ? "bg-brand-success/15 text-brand-success"
-                      : "bg-slate-100 dark:bg-slate-800 text-slate-400"
+                      ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400"
+                      : "bg-slate-100 dark:bg-slate-900 text-slate-400 dark:text-slate-600"
                   }`}
                 >
-                  {step > s ? <ShieldCheck className="h-4 w-4" /> : s}
+                  {step > s ? <ShieldCheck className="h-4.5 w-4.5" /> : s}
                 </div>
                 <span
                   className={`text-[10px] font-bold uppercase tracking-wider hidden sm:inline ${
@@ -175,33 +185,40 @@ export default function Assessment() {
                 >
                   {s === 1 ? "Lifestyle" : s === 2 ? "Vitals" : "Symptoms"}
                 </span>
-                {s < 3 && <ChevronRight className="h-3.5 w-3.5 text-slate-300 hidden sm:inline" />}
+                {s < 3 && <ChevronRight className="h-3.5 w-3.5 text-slate-350 dark:text-slate-800 hidden sm:inline" />}
               </div>
             ))}
           </div>
 
           {submitting ? (
-            /* Loading State */
-            <div className="flex flex-col items-center justify-center py-16 space-y-6">
+            /* Premium Processing state with loading skeletons */
+            <div className="flex flex-col items-center justify-center py-16 space-y-8">
               <div className="relative">
-                <div className="h-16 w-16 rounded-full border-4 border-brand-primary/10 border-t-brand-primary animate-spin"></div>
-                <Heart className="h-6 w-6 text-brand-primary fill-brand-primary/10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-slow" />
+                <div className="h-20 w-20 rounded-full border-4 border-blue-500/10 border-t-blue-600 animate-spin"></div>
+                <Heart className="h-8 w-8 text-blue-600 fill-blue-500/10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-slow" />
               </div>
-              <div className="text-center space-y-2 max-w-sm">
-                <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 animate-pulse">
-                  Analyzing Screening Data...
+              <div className="text-center space-y-3 max-w-sm">
+                <h3 className="text-base font-extrabold text-slate-800 dark:text-slate-200 animate-pulse">
+                  Running Neural Classification...
                 </h3>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  Our AI models are cross-referencing your symptoms and lifestyle scores to build your preventive screening profile.
+                <p className="text-xs text-slate-450 dark:text-slate-400 leading-relaxed font-medium">
+                  We are cross-referencing lifestyle factors, symptoms database weights, and blood pressure logs against statistical datasets.
                 </p>
+              </div>
+
+              {/* Skeletons mimicking data extraction */}
+              <div className="w-full max-w-md space-y-3 pt-6">
+                <div className="h-4 bg-slate-200/50 dark:bg-slate-900/60 rounded-md w-3/4 animate-pulse"></div>
+                <div className="h-4 bg-slate-200/50 dark:bg-slate-900/60 rounded-md w-5/6 animate-pulse"></div>
+                <div className="h-4 bg-slate-200/50 dark:bg-slate-900/60 rounded-md w-1/2 animate-pulse"></div>
               </div>
             </div>
           ) : (
-            /* Form Steps */
+            /* Forms steps content */
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* STEP 1: Personal & Lifestyle */}
+              {/* STEP 1: Personal & Lifestyle parameters */}
               {step === 1 && (
-                <div className="space-y-5">
+                <div className="space-y-5 animate-fade-in">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Age</label>
@@ -211,7 +228,7 @@ export default function Assessment() {
                         max="120"
                         value={age}
                         onChange={(e) => setAge(parseInt(e.target.value) || 25)}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 text-xs font-semibold outline-none focus:border-brand-primary"
+                        className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-850 bg-white/40 dark:bg-slate-950/40 text-xs font-semibold outline-none focus:border-blue-600 transition-colors"
                       />
                     </div>
                     <div className="space-y-2">
@@ -219,7 +236,7 @@ export default function Assessment() {
                       <select
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-semibold outline-none focus:border-brand-primary"
+                        className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-855 bg-white dark:bg-slate-950 text-xs font-semibold outline-none focus:border-blue-600 transition-colors"
                       >
                         <option>Male</option>
                         <option>Female</option>
@@ -230,22 +247,22 @@ export default function Assessment() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sleep Duration (hrs)</label>
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Daily Sleep (hours)</label>
                       <input
                         type="number"
                         min="1"
                         max="24"
                         value={sleepHours}
                         onChange={(e) => setSleepHours(parseInt(e.target.value) || 7)}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 text-xs font-semibold outline-none focus:border-brand-primary"
+                        className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-850 bg-white/40 dark:bg-slate-950/40 text-xs font-semibold outline-none focus:border-blue-600 transition-colors"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Exercise Frequency</label>
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Weekly Exercise</label>
                       <select
                         value={exercise}
                         onChange={(e) => setExercise(e.target.value as any)}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-semibold outline-none focus:border-brand-primary"
+                        className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-855 bg-white dark:bg-slate-950 text-xs font-semibold outline-none focus:border-blue-600 transition-colors"
                       >
                         <option>None</option>
                         <option>1-2 days/week</option>
@@ -257,11 +274,11 @@ export default function Assessment() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Smoking</label>
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Tobacco/Smoking</label>
                       <select
                         value={smoking}
                         onChange={(e) => setSmoking(e.target.value as any)}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-semibold outline-none focus:border-brand-primary"
+                        className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-855 bg-white dark:bg-slate-950 text-xs font-semibold outline-none focus:border-blue-600 transition-colors"
                       >
                         <option>No</option>
                         <option>Occasionally</option>
@@ -269,11 +286,11 @@ export default function Assessment() {
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Alcohol</label>
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Alcohol Consumption</label>
                       <select
                         value={alcohol}
                         onChange={(e) => setAlcohol(e.target.value as any)}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-semibold outline-none focus:border-brand-primary"
+                        className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-855 bg-white dark:bg-slate-950 text-xs font-semibold outline-none focus:border-blue-600 transition-colors"
                       >
                         <option>No</option>
                         <option>Occasionally</option>
@@ -284,9 +301,9 @@ export default function Assessment() {
                 </div>
               )}
 
-              {/* STEP 2: Vitals */}
+              {/* STEP 2: Physiological metrics (Vitals) */}
               {step === 2 && (
-                <div className="space-y-5">
+                <div className="space-y-5 animate-fade-in">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Systolic BP (mmHg)</label>
@@ -296,7 +313,7 @@ export default function Assessment() {
                         max="250"
                         value={sysBP}
                         onChange={(e) => setSysBP(parseInt(e.target.value) || 120)}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 text-xs font-semibold outline-none focus:border-brand-primary"
+                        className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-850 bg-white/40 dark:bg-slate-955/40 text-xs font-semibold outline-none focus:border-blue-600 transition-colors"
                       />
                     </div>
                     <div className="space-y-2">
@@ -307,25 +324,25 @@ export default function Assessment() {
                         max="180"
                         value={diaBP}
                         onChange={(e) => setDiaBP(parseInt(e.target.value) || 80)}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 text-xs font-semibold outline-none focus:border-brand-primary"
+                        className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-850 bg-white/40 dark:bg-slate-955/40 text-xs font-semibold outline-none focus:border-blue-600 transition-colors"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Blood Sugar (optional, mg/dL)</label>
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Fasting Blood Sugar (mg/dL)</label>
                       <input
                         type="number"
                         min="10"
                         max="500"
                         value={bloodSugar}
                         onChange={(e) => setBloodSugar(parseInt(e.target.value) || 95)}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 text-xs font-semibold outline-none focus:border-brand-primary"
+                        className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-850 bg-white/40 dark:bg-slate-955/40 text-xs font-semibold outline-none focus:border-blue-600 transition-colors"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">BMI (Body Mass Index)</label>
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Body Mass Index (BMI)</label>
                       <input
                         type="number"
                         step="0.1"
@@ -333,18 +350,18 @@ export default function Assessment() {
                         max="60"
                         value={bmi}
                         onChange={(e) => setBmi(parseFloat(e.target.value) || 22.5)}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 text-xs font-semibold outline-none focus:border-brand-primary"
+                        className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-850 bg-white/40 dark:bg-slate-955/40 text-xs font-semibold outline-none focus:border-blue-600 transition-colors"
                       />
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* STEP 3: Symptoms */}
+              {/* STEP 3: Symptoms select list */}
               {step === 3 && (
-                <div className="space-y-5">
+                <div className="space-y-5 animate-fade-in">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Select Symptoms you feel</label>
+                    <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-sans">Select Symptoms</label>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                       {symptomsList.map((sym) => {
                         const isSelected = selectedSymptoms.includes(sym);
@@ -353,10 +370,10 @@ export default function Assessment() {
                             key={sym}
                             type="button"
                             onClick={() => handleSymptomToggle(sym)}
-                            className={`px-3 py-2.5 rounded-xl border text-xs font-semibold transition-all ${
+                            className={`px-3 py-3 rounded-2xl border text-xs font-bold transition-all duration-200 ${
                               isSelected
-                                ? "bg-brand-primary text-white border-brand-primary shadow-sm"
-                                : "bg-white/40 dark:bg-slate-900/40 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900/60"
+                                ? "bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-500/10"
+                                : "bg-white/40 dark:bg-slate-955/40 text-slate-650 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900/60"
                             }`}
                           >
                             {sym}
@@ -367,25 +384,25 @@ export default function Assessment() {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Additional Symptom Details</label>
+                    <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Describe symptoms or duration</label>
                     <textarea
                       rows={3}
                       value={symptomText}
                       onChange={(e) => setSymptomText(e.target.value)}
-                      placeholder="Describe how long symptoms have occurred, or add any other discomfort..."
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 text-xs font-semibold outline-none focus:border-brand-primary resize-none"
+                      placeholder="Add details, duration, or any other signs you observe..."
+                      className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-850 bg-white/40 dark:bg-slate-955/40 text-xs font-semibold outline-none focus:border-blue-600 resize-none transition-colors"
                     ></textarea>
                   </div>
                 </div>
               )}
 
-              {/* Navigation Action Buttons */}
+              {/* Step Navigation buttons */}
               <div className="flex items-center justify-between border-t border-slate-200/50 dark:border-slate-800/40 pt-6">
                 {step > 1 ? (
                   <button
                     type="button"
                     onClick={handleBack}
-                    className="inline-flex items-center space-x-2 text-xs font-bold text-slate-500 hover:text-slate-800 dark:hover:text-white transition-colors"
+                    className="inline-flex items-center space-x-2 text-xs font-bold text-slate-500 hover:text-slate-850 dark:hover:text-white transition-colors"
                   >
                     <ArrowLeft className="h-4 w-4" />
                     <span>Back</span>
@@ -398,7 +415,7 @@ export default function Assessment() {
                   <button
                     type="button"
                     onClick={handleNext}
-                    className="inline-flex items-center space-x-2 bg-brand-primary hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl text-xs transition-colors"
+                    className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3.5 rounded-2xl text-xs shadow-md shadow-blue-500/15 active:scale-95 transition-all"
                   >
                     <span>Next Step</span>
                     <ArrowRight className="h-4 w-4" />
@@ -406,9 +423,9 @@ export default function Assessment() {
                 ) : (
                   <button
                     type="submit"
-                    className="inline-flex items-center space-x-2 bg-brand-success hover:bg-emerald-600 text-white font-bold px-6 py-3 rounded-xl text-xs transition-colors"
+                    className="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-7 py-3.5 rounded-2xl text-xs shadow-md shadow-emerald-500/15 active:scale-95 transition-all"
                   >
-                    <span>Submit for AI Analysis</span>
+                    <span>Analyze Assessment</span>
                     <CheckCircle2 className="h-4 w-4" />
                   </button>
                 )}
@@ -417,97 +434,114 @@ export default function Assessment() {
           )}
         </div>
       ) : (
-        /* RESULT VIEW */
+        /* RESULT VIEW - Apple / Ada Health style */
         <div className="space-y-8 animate-slide-up">
-          {/* Main Results card */}
-          <div className="glass-panel rounded-3xl p-6 md:p-8 border border-slate-200/50 dark:border-slate-800/40 shadow-lg text-left space-y-6 relative overflow-hidden">
-            <div className="absolute top-0 right-0 h-40 w-40 bg-brand-primary/5 rounded-full blur-3xl"></div>
+          <div className="glass-panel rounded-3xl p-6 md:p-8 border border-slate-200/50 dark:border-slate-800/40 shadow-xl text-left space-y-8 relative overflow-hidden">
+            <div className="absolute top-0 right-0 h-40 w-40 bg-blue-500/5 rounded-full blur-3xl"></div>
             
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-6 border-b border-slate-200/50 dark:border-slate-800/40 space-y-4 sm:space-y-0">
               <div className="flex items-center space-x-3">
-                <div className="h-10 w-10 bg-brand-primary/10 rounded-xl flex items-center justify-center text-brand-primary">
-                  <Activity className="h-5 w-5" />
+                <div className="h-12 w-12 bg-blue-500/15 rounded-2xl flex items-center justify-center text-blue-600">
+                  <Activity className="h-6 w-6" />
                 </div>
                 <div>
-                  <h2 className="text-base font-bold text-slate-850 dark:text-slate-100">{result.title}</h2>
-                  <p className="text-[10px] text-slate-400">Screening Complete • {new Date(result.date).toLocaleDateString()}</p>
+                  <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest flex items-center space-x-1">
+                    <Sparkles className="h-3 w-3" />
+                    <span>AI Model Analysis</span>
+                  </span>
+                  <h2 className="text-lg font-black text-slate-850 dark:text-slate-100">{result.title}</h2>
+                  <p className="text-[10px] text-slate-400">Index Generated • {new Date(result.date).toLocaleDateString()}</p>
                 </div>
               </div>
               
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-4">
                 <div className="text-right">
-                  <span className="text-xs font-semibold text-slate-400">Risk Assessment</span>
-                  <div className={`mt-0.5 px-3 py-1 rounded-full text-[10px] font-bold border ${getRiskColor(result.risk)}`}>
-                    {result.risk} Risk
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Health Risk Level</span>
+                  <div className={`mt-1 px-3.5 py-1 rounded-full text-[10px] font-extrabold border ${getRiskColor(result.risk)}`}>
+                    {result.risk}
                   </div>
                 </div>
 
-                {/* mini gauge */}
+                {/* Gauge widget */}
                 <div className="relative flex items-center justify-center">
                   <svg className="w-16 h-16 transform -rotate-90">
-                    <circle cx="32" cy="32" r="26" className="stroke-slate-200 dark:stroke-slate-800 fill-none" strokeWidth="4" />
+                    <circle cx="32" cy="32" r="26" className="stroke-slate-100 dark:stroke-slate-900 fill-none" strokeWidth="4.5" />
                     <circle
                       cx="32"
                       cy="32"
                       r="26"
-                      className={`fill-none ${getScoreBg(result.score)}`}
-                      strokeWidth="4"
+                      className={`fill-none transition-all duration-500 ${getScoreBg(result.score)}`}
+                      strokeWidth="4.5"
                       strokeDasharray={2 * Math.PI * 26}
                       strokeDashoffset={2 * Math.PI * 26 * (1 - result.score / 100)}
                       strokeLinecap="round"
                     />
                   </svg>
-                  <span className="absolute text-xs font-black text-slate-800 dark:text-white">{result.score}</span>
+                  <div className="absolute flex flex-col items-center justify-center">
+                    <span className="text-xs font-black text-slate-800 dark:text-white leading-none">{result.score}</span>
+                    <span className="text-[6px] font-extrabold text-slate-400 uppercase leading-none mt-0.5">%</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Findings Summary */}
-            <div className="space-y-2">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Analysis Summary</h3>
-              <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+            {/* Risk Summary widget */}
+            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-850/40 space-y-2">
+              <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center space-x-1.5">
+                <Info className="h-3.5 w-3.5 text-blue-600" />
+                <span>Risk Summary</span>
+              </h3>
+              <p className="text-xs leading-relaxed text-slate-650 dark:text-slate-350 font-medium">
                 {result.summary}
               </p>
             </div>
 
-            {/* Key Clinical Findings */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">AI Visual & Textual Findings</h3>
-              <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-350">
+            {/* Core Findings */}
+            <div className="space-y-4">
+              <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-450 border-b border-slate-100 dark:border-slate-850/50 pb-1.5">
+                AI Pipeline Observations
+              </h3>
+              <ul className="space-y-3">
                 {result.findings.map((finding, idx) => (
-                  <li key={idx} className="flex items-start space-x-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-brand-primary mt-1.5 flex-shrink-0" />
-                    <span>{finding}</span>
+                  <li key={idx} className="flex items-start space-x-3 text-xs">
+                    <div className="h-5 w-5 bg-blue-500/10 text-blue-600 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <CheckCircle2 className="h-3.5 w-3.5" />
+                    </div>
+                    <span className="text-slate-650 dark:text-slate-350 font-medium leading-relaxed">{finding}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Recommendations */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Preventive Actions & Guidance</h3>
-              <ul className="space-y-2 text-xs text-slate-655 dark:text-slate-350">
+            {/* Preventive Recommendations */}
+            <div className="space-y-4">
+              <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-450 border-b border-slate-100 dark:border-slate-850/50 pb-1.5">
+                Preventive Guideline Checklist
+              </h3>
+              <ul className="space-y-3">
                 {result.recommendations.map((rec, idx) => (
-                  <li key={idx} className="flex items-start space-x-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-brand-success mt-1.5 flex-shrink-0" />
-                    <span>{rec}</span>
+                  <li key={idx} className="flex items-start space-x-3 text-xs">
+                    <div className="h-5 w-5 bg-emerald-500/10 text-emerald-600 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Activity className="h-3.5 w-3.5" />
+                    </div>
+                    <span className="text-slate-650 dark:text-slate-350 font-medium leading-relaxed">{rec}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Action Buttons */}
+            {/* Action buttons */}
             <div className="flex items-center justify-between border-t border-slate-200/50 dark:border-slate-800/40 pt-6">
               <button
                 onClick={() => router.push("/dashboard")}
-                className="text-xs font-bold text-slate-500 hover:text-slate-850 dark:hover:text-white transition-colors"
+                className="text-xs font-bold text-slate-505 hover:text-slate-850 dark:hover:text-white transition-colors"
               >
                 Go to Dashboard
               </button>
               
               <button
                 onClick={handleReset}
-                className="inline-flex items-center space-x-1.5 bg-brand-primary hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl text-xs transition-all active:scale-95"
+                className="inline-flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3.5 rounded-2xl text-xs shadow-md shadow-blue-500/15 active:scale-95 transition-all"
               >
                 <RefreshCw className="h-3.5 w-3.5" />
                 <span>New Screening</span>
@@ -515,8 +549,16 @@ export default function Assessment() {
             </div>
           </div>
 
-          {/* Persistent disclaimer below results */}
-          <MedicalDisclaimer />
+          {/* Medical disclaimer */}
+          <div className="p-6 rounded-3xl border border-rose-500/20 bg-rose-500/5 text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed">
+            <h4 className="font-extrabold text-rose-600 dark:text-rose-400 uppercase tracking-widest text-[9px] mb-2 flex items-center space-x-1.5">
+              <AlertCircle className="h-4 w-4" />
+              <span>Important Medical Disclaimer</span>
+            </h4>
+            <p>
+              This result is generated using Artificial Intelligence and should not be considered a medical diagnosis. It does not replace physical checks, medical imaging, or physician diagnostics. Always seek the advice of a qualified healthcare professional with any questions regarding medical conditions.
+            </p>
+          </div>
         </div>
       )}
     </div>

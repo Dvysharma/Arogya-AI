@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Heart, Menu, X, Sun, Moon, LayoutDashboard, FileText, Camera, ShieldAlert, User, Settings as SettingsIcon } from "lucide-react";
+import { Heart, Menu, X, Sun, Moon, LayoutDashboard, FileText, Camera, ShieldAlert, User, Settings as SettingsIcon, Cpu } from "lucide-react";
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -41,6 +41,7 @@ export const Navbar = () => {
     { name: "AI Assessment", href: "/assessment", icon: ShieldAlert },
     { name: "Image Analysis", href: "/image-analysis", icon: Camera },
     { name: "Reports History", href: "/reports", icon: FileText },
+    { name: "Admin Panel", href: "/admin", icon: Cpu },
     { name: "My Profile", href: "/profile", icon: User },
     { name: "Settings", href: "/settings", icon: SettingsIcon },
   ];
